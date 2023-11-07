@@ -1,4 +1,5 @@
 /.DS_Store
+/.env
 /csr.pem
 /key.pem
 /maszaweb.pl.certificate.pem
