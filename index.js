@@ -36,7 +36,7 @@ mongoose.connection.on("connected", () => {
     console.log("MongoDB connected!");
 });
 
-const allowedOrigins = ["http://site.maszaweb.pl:1255","https://maszaweb.pl:1255", "http://localhost:3000","https://localhost:3000"]; // Replace with your actual frontend URL
+const allowedOrigins = ["http://localhost:80", "https://localhost:80", "https://localhost:3000", "https://igclone.maszaweb.pl", "http://igclone.maszaweb.pl"]; // Replace with your actual frontend URL
 
 const corsOptions = {
     origin: allowedOrigins,
@@ -56,17 +56,14 @@ app.use("/api/posts", postsRoute);
 app.use("/api/upload", uploadRoute);
 app.use("/api/profile", profileRoute);
 
+app.get("/", (req,res,next) => {
+    res.send(200).json("test")
+})
+
 const PORT = process.env.PORT || 8880;
 
-const options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('maszaweb.pl.certificate.pem'),
-  ca: fs.readFileSync('maszaweb.pl.intermediate.pem')
-};
 
-const server = https.createServer(options, app);
-
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     connect();
 })

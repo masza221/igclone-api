@@ -6,9 +6,6 @@ export const register = async (req, res, next) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-
-    console.log(req.body);
-
     const newUser = new User({
       ...req.body,
       password: hash,
@@ -22,6 +19,7 @@ export const register = async (req, res, next) => {
 
     const { password, isAdmin, ...otherDetails } = newUser._doc;
 
+    
     res.cookie("access_token", token, {
       httpOnly: true,
       secure: true,
@@ -83,7 +81,7 @@ export const logout = async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      domain: ".maszaweb.pl",
+      domain: "maszaweb.pl",
     });
     return res.status(200).json({ message: "Logged out successfully." });
   } catch (err) {

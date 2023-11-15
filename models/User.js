@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema(
     },
     photoURL: {
       type: String,
-      default: "https://maszaweb.pl:1256/uploads/young-businessman-icon.png",
+      default: "https://maszaweb.pl:8880/uploads/defaults/young-businessman-icon.png",
     },
     password: {
       type: String,
