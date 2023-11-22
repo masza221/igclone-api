@@ -11,7 +11,7 @@ export const uploadFile = async (req, res) => {
       }
 
       const filePath = req.file.path.substring(7);
-      const fileUrl = `${req.protocol}://${req.get('host')}/${filePath}`;
+      const fileUrl = `https://${req.get('host')}/${filePath}`;
 
       res.json({ success: true, message: 'File saved', fileUrl });
     });

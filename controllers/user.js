@@ -1,5 +1,4 @@
 import User from "../models/User.js";
-import Comments from "../models/Comments.js";
 import { createError } from "../utils/errorMessages.js";
 
 export const updateUser = async (req,res,next)=>{
@@ -10,7 +9,16 @@ export const updateUser = async (req,res,next)=>{
       { new: true }
     );
 
-    res.status(200).json(updatedUser);
+    const {password, ...restDetails } = updatedUser._doc
+
+    res.cookie("user", JSON.stringify(restDetails), {
+      httpOnly: false, 
+      secure: true,
+      sameSite: "none",
+      domain: ".maszaweb.pl",      
+    });
+
+    res.status(200).json(restDetails);
   } catch (err) {
     next(err);
   }

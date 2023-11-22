@@ -27,6 +27,14 @@ export const register = async (req, res, next) => {
       domain: ".maszaweb.pl",
       maxAge: 60 * 60 * 1000,
     });
+
+    res.cookie("user", JSON.stringify(otherDetails), {
+      httpOnly: false, 
+      secure: true,
+      sameSite: "none",
+      domain: ".maszaweb.pl",
+      maxAge: 60 * 60 * 1000,
+    });
     
     return res.status(200).json(otherDetails);
   
@@ -56,7 +64,7 @@ export const login = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h", // Set an appropriate expiration time
+      expiresIn: "1h", 
     });
 
     const { password, isAdmin, ...otherDetails } = user._doc;
@@ -69,20 +77,24 @@ export const login = async (req, res) => {
       maxAge: 60 * 60 * 1000,
     });
 
+    res.cookie("user", JSON.stringify(otherDetails), {
+      maxAge: 60 * 60 * 1000,
+      sameSite: "none",
+      domain: ".maszaweb.pl"
+    });
+
     return res.status(200).json(otherDetails);
   } catch (err) {
     return res.status(500).json({ message: "Internal server message." });
   }
 };
 
+
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("access_token", {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      domain: "maszaweb.pl",
-    });
+    res.clearCookie("access_token");
+
+    res.clearCookie("user")
     return res.status(200).json({ message: "Logged out successfully." });
   } catch (err) {
     return res.status(500).json({ message: "Internal server message." });

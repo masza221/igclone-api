@@ -36,7 +36,7 @@ mongoose.connection.on("connected", () => {
     console.log("MongoDB connected!");
 });
 
-const allowedOrigins = ["http://localhost:80", "https://localhost:80", "https://localhost:3000", "https://igclone.maszaweb.pl", "http://igclone.maszaweb.pl"]; // Replace with your actual frontend URL
+const allowedOrigins = ["http://localhost:80", "http://localhost:3000", "https://localhost:3000", "https://igclone.maszaweb.pl", "http://igclone.maszaweb.pl", "https://masza221-api.playit.gg:1255"]; // Replace with your actual frontend URL
 
 const corsOptions = {
     origin: allowedOrigins,

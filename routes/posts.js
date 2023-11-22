@@ -25,19 +25,19 @@ router.delete("/:id", removePost);
 router.get("/:id", verifyUser, getPost);
 
 //GET ALL
-router.get("/all", getPosts);
+router.get("/", getPosts)
 
-//GET Page
 router.get("/page/:page", getPostsPage);
+
 
 //CREATE
 router.post("/createPost", verifyUser, createPost);
 
-router.put("/likePost/:id", verifyUser, likePost);
+router.put("/likePost/:id",verifyUser, likePost);
 
 router.get("/getComments/:id", getPostCommentsWithUserData);
-router.put("/commentPost/:id", verifyUser, commentPost);
-router.delete("/commentRemove/:id", verifyUser, removeComment)
+router.put("/commentPost/:id",verifyUser, commentPost);
+router.delete("/commentRemove/:id",verifyUser, removeComment)
 
 
 export default router;

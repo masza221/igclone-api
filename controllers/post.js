@@ -56,8 +56,9 @@ export const getPosts = async (req, res, next) => {
 
 export const getPostsPage = async (req, res, next) => {
   const limit = req.query.limit;
+  const page = +req.params.page;
   try {
-    const Posts = await Post.find()
+    const posts = await Post.find()
       .populate({
         path: "comments",
         select: "comment user", 
@@ -71,10 +72,12 @@ export const getPostsPage = async (req, res, next) => {
         select: "displayName photoURL email"
       })
       .sort("-createdAt")
-      .skip((req.params.page - 1) * limit)
+      .skip((page - 1) * limit)
       .limit(limit);
 
-    res.status(200).json(Posts);
+      const pages = Math.ceil(await Post.countDocuments() / limit);
+
+    res.status(200).json({posts, pages, page});
   } catch (err) {
     next(err);
   }
@@ -103,6 +106,11 @@ export const createPost = async (req,res,next)=>{
 
 export const likePost = async (req, res) => {
   const id = req.params.id;
+
+  if(!req.user) {
+    return res.status(401).json({ message: 'Not Loged' });
+  }
+
   const userId = req.user.id;
   try {
     const post = await Post.findById(id);
